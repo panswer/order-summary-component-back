@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  app:
+    container_name: order_summary_component
+    build: .
+    labels:
+      - "traefik.enable=true" # <== Enable traefik to proxy this container
+      - "traefik.http.routers.component1.rule=Host(`silvera.mytestingenlocal.ml`)" # <== Your Domain Name for the https rule
+      - "traefik.http.routers.component1.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
+      - "traefik.http.routers.component1.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
+      - "traefik.http.services.component1.loadbalancer.server.port=3000" # <== port running
+      - "traefik.docker.network=web"
+    networks:
+      - web
+    env_file:
+      - .env
+
+networks:
+  web:
