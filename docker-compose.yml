@@ -10,6 +10,11 @@ services:
       - "traefik.http.routers.summary.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
       - "traefik.http.routers.summary.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
       - "traefik.http.services.summary.loadbalancer.server.port=3000" # 3000 is the port we proxy to
+      - "traefik.http.routers.summary.middlewares=cors@docker" # <== This is a middleware to redirect to https
+      # no https
+      - "traefik.http.routers.summary-http.rule=Host(`summary.mytestingenlocal.ml`)" # <== Your Domain Name goes here for the http rule
+      - "traefik.http.routers.summary-http.entrypoints=web" # <== Defining the entrypoint for http, **ref: line 30
+      - "traefik.http.routers.summary-http.middlewares=redirect@file" # <== This is a middleware to redirect to https
     networks:
       - web
     env_file:
