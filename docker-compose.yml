@@ -9,7 +9,7 @@ services:
       - "traefik.http.routers.summary.rule=Host(`summary.mytestingenlocal.ml`)" # <== Your Domain Name for the https rule
       - "traefik.http.routers.summary.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
       - "traefik.http.routers.summary.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
-      - "traefik.http.services.<service_name>.loadbalancer.server.port=3000" # 3000 is the port we proxy to
+      - "traefik.http.services.summary.loadbalancer.server.port=3000" # 3000 is the port we proxy to
     networks:
       - web
     env_file:
