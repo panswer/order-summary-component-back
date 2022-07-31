@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 const envPath = path.resolve(__dirname, './.env');
 if (fs.existsSync(envPath)) {
@@ -11,6 +12,8 @@ if (fs.existsSync(envPath)) {
 }
 
 const app = require('./server/app');
+
+app.use(morgan('dev'));
 
 const staticFiles = path.resolve(__dirname, './www');
 if (!fs.existsSync(staticFiles)) {
